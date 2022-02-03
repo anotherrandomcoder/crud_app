@@ -21,16 +21,9 @@ function Posts() {
     const [limit, setLimit] = useState(10)
     const [page, setPage] = useState(1)
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
-    const lastElement = useRef()
-    const observer = useRef()
-
-    // console.log(lastElement)
 
     const [fetchPosts, isPostsLoading, postError] = useFetching(async (limit, page) => {
         const response = await PostService.getAll(limit, page)
-        // console.log(...posts)
-        console.log(response.data[0].id)
-        // setPosts([...posts, ...response.data])
         setPosts([...response.data])
         const totalCount = response.headers['x-total-count']
         setTotalPages(getPageCount(totalCount, limit))
